@@ -1,4 +1,4 @@
-    const { model, Schema } = require('mongoose')
+const { model, Schema } = require('mongoose')
 const passportLocalMongoose = require('passport-local-mongoose')
 
 const userSchema = new Schema(
@@ -12,6 +12,6 @@ const userSchema = new Schema(
   }
 )
 
-userSchema.plugin(passportLocalMongoose)
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email' })
 
 module.exports = model('User', userSchema)
