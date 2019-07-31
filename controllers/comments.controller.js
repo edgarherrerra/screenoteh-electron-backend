@@ -1,0 +1,1 @@
+const Comments = require('../models/Comments')

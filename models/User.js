@@ -4,7 +4,13 @@ const passportLocalMongoose = require('passport-local-mongoose')
 const userSchema = new Schema(
   {
     username: String,
-    email: String
+    email: String,
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Categories"
+      }
+    ]
   },
   {
     timestamps: true,
