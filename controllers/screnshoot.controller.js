@@ -9,15 +9,15 @@ const os = require('os');
 exports.upload = async (req, res) => {
   let files = req.files
   console.log(files)
-  try {
-    for (let i = 0; i < files.length; i++) {
+  for (let i = 0; i < files.length; i++) {
+    try {
       const screenshot = await Screenshots.create({ images: files[i].url })
       await Categories.findOneAndUpdate({ categorie: "🏁 Get Started" }, { $push: { screenshots: screenshot._id } }, { new: true })
       res.status(201).json({ images: screenshot, msg: 'Entra' })
     }
-  }
-  catch (err) {
-    res.status(500).json({ err })
+    catch (err) {
+      res.status(500).json({ err })
+    }
   }
 }
 
@@ -51,21 +51,27 @@ exports.getAllScreenshots = (req, res, next) => {
             filepath: url,
             contentType: 'multipart/form-data'
           })
-
           if (i == fullFilePath.length - 1) {
-            resolve()
+            resolve("Done!")
           }
+
         })
       })
     })
   }
 
-  appendScreenshots().then(() => {
+  appendScreenshots().then((response) => {
+    console.log(response)
     axios.post('http://localhost:3000/screenshots', form, {
       headers: form.getHeaders(),
     }).then(response => {
       User.find(id).populate({ path: "categories", populate: { path: "screenshots" } })
-        .then(response => res.status(200).json({ response }))
+        .then(response => {
+          res.status(200).json({ response })
+          for (let i = 0; i < fullFilePath.length; i++) {
+            fs.unlinkSync(fullFilePath[i])
+          }
+        })
         .catch(err => res.status(500).json({ err }))
     }).catch(err => {
       console.log(err);
