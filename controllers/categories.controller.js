@@ -24,6 +24,17 @@ exports.createCategory = async (req, res, next) => {
     res.status(500).json({ err })
   }
 }
+
+exports.deleteOneCategory =  async (req, res, next) => {
+  id = req.params.id
+  try {
+    const categoryDeleted = await Category.findByIdAndDelete(id)
+    res.status(201).json({ categoryDeleted, msg: "Deleted!" })
+  } catch (error) {
+    res.status(500).json({ error })
+  }
+}
+
 // exports.getCategories = async (req, res, next) => {
 //   const id = req.user._id
 //   try {
