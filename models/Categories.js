@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 const CategoriesSchema = new Schema({
   categorie: {
     type: String,
-    default: "Get Started"
+    default: "🏁 Get Started"
   },
   screenshots: [
     {
