@@ -62,10 +62,12 @@ const index = require('./routes/index');
 const authRoutes = require('./routes/auth.routes')
 const categoriesRoutes = require('./routes/categories.routes')
 const screenshotsRoutes = require('./routes/screenshots.routes')
+const commentsRoutes = require('./routes/comments.routes')
 app.use('/', index);
 app.use('/', authRoutes)
 app.use('/', screenshotsRoutes)
 app.use('/categories', categoriesRoutes)
+app.use('/comments', commentsRoutes)
 
 
 

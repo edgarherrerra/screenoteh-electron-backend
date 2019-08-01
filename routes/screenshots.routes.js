@@ -6,5 +6,5 @@ const { verifyToken } = require('../config/jwt')
 
 router.post('/screenshots', uploadCloud.any(), upload);
 router.get('/screenshots', verifyToken, getAllScreenshots);
-router.get('/screenshots/:id', getOneScrenShoot)
+router.get('/screenshot/:id', getOneScrenShoot)
 module.exports = router;

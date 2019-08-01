@@ -4,7 +4,6 @@ const User = require('../models/User')
 
 exports.upload = async (req, res) => {
   let files = req.files
-  console.log(files)
   for (let i = 0; i < files.length; i++) {
     try {
       const screenshot = await Screenshots.create({ images: files[i].url })
@@ -19,7 +18,7 @@ exports.upload = async (req, res) => {
 
 exports.getAllScreenshots = (req, res, next) => {
   const id = req.user._id
-  User.find(id).populate({ path: "categories", populate: { path: "screenshots" } })
+  User.find(id).populate({ path: "categories", populate: { path: "screenshots" }})
     .then(response => {
       res.status(200).json({ response })
     })
@@ -28,7 +27,7 @@ exports.getAllScreenshots = (req, res, next) => {
 
 exports.getOneScrenShoot = (req, res, next) => {
   const id = req.params.id
-  Screenshots.findById(id)
+  Screenshots.findById(id).populate("comments")
     .then(screenshot => {
       res.status(200).json({ screenshot })
     })
